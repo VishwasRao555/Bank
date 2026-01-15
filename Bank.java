@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Bank{
 
-
+    //Deposit Method
      public static void deposit(int Account_ID, double Amount) throws SQLException,IllegalArgumentException {
          Connection con=SQL.getconnection();
 
@@ -59,3 +59,4 @@ public class Bank{
 
 
 }
+

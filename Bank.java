@@ -18,6 +18,11 @@ public class Bank{
               ps.setDouble(1, Amount);
               ps.setInt(2, Account_ID);
               ps.executeUpdate();
+              PreparedStatement ps2= con.prepareStatement("INSERT INTO transactions (Account_ID,Tx_Type,Amount) values (?,?,?)");
+              ps2.setInt(1,Account_ID);
+              ps2.setString(2,"Deposit");
+              ps2.setDouble(3,Amount);
+              ps2.executeUpdate();
           }
 
      }
@@ -38,10 +43,17 @@ public class Bank{
          } else if (Amount > Balance) {
              throw new InsufficiantBalanceException("InSufficient Funds in Your Account!!");
          }
-         PreparedStatement ps = con.prepareStatement("UPDATE account SET Balance=Balance-? WHERE Account_ID=? ;");
-         ps.setDouble(1, Amount);
-         ps.setInt(2, Account_ID);
-         ps.executeUpdate();
+         else {
+             PreparedStatement ps = con.prepareStatement("UPDATE account SET Balance=Balance-? WHERE Account_ID=? ;");
+             ps.setDouble(1, Amount);
+             ps.setInt(2, Account_ID);
+             ps.executeUpdate();
+             PreparedStatement ps2 = con.prepareStatement("INSERT INTO transactions (Account_ID,Tx_Type,Amount) values (?,?,?)");
+             ps2.setInt(1, Account_ID);
+             ps2.setString(2, "Withdraw");
+             ps2.setDouble(3, Amount);
+             ps2.executeUpdate();
+         }
 
      }
 
